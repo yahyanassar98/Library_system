@@ -18,24 +18,56 @@ class Library:
             else:
                 level = input('Invalid Input ! , Please enter member level again (A/B/C): ').upper()
 
+
     def edit_member(self):
-        pass
-    
-    def show_members(self):
-        spaces = '\t\t\t'
-        print(f'ID  | Name{spaces}| Email{spaces}| Level')
+        id = int(input('* Enter member ID: '))
         for memb in self.members:
-            print(f'{self.members.index(memb) + 1}   | {memb.name}{spaces}| {memb.email}{spaces}| {memb.level}')
+            if id == memb.id:
+                name = input('* Enter new name: ')
+                email = input('* Enter new email: ')
+                level = input('* Enter member level (A/B/C): ').upper()
+                while True:
+                    if level in ['A', 'B', 'C']:
+                        memb.name = name
+                        memb.email = email
+                        memb.level = level
+                        print('# Member details updated successfully')
+                        break
+                    else:
+                        level = input('Invalid Input ! , Please enter member level again (A/B/C): ').upper()
+                break                        
+        else:
+            print('# Member ID NOT Found.')
+
+
+    def show_members(self):
+        spaces1 = '\t\t'
+        spaces2 = '\t\t\t'
+        print(f'ID  | Name{spaces1}| Email{spaces2}| Level')
+        print('-' * 65)
+        for memb in self.members:
+            print(f'{memb.id}   | {memb.name}{spaces1}| {memb.email}{spaces2}| {memb.level}')
+
 
     def delete_member(self):
-        pass
+        id = int(input('* Enter member ID: '))
+        for memb in self.members:
+            if id == memb.id:
+                self.members.remove(memb)
+                print(f'# Member {memb.name} deleted successfully')
+                break
+        else:
+            print('# Member ID NOT Found.')
 
 class Member:
+    id = 1
     def __init__(self, name, email, level) -> None:
+        self.id = Member.id
         self.name = name
         self.email = email
         self.level = level
-        self.id = 1
+        Member.id += 1
+        
 
 class Book:
     def __init__(self, title, author, level) -> None:
@@ -69,13 +101,13 @@ while True:
         lib.add_member()
 
     elif choice == 2:
-        pass
+        lib.edit_member()
 
     elif choice == 3:
         lib.show_members()
 
     elif choice == 4:
-        pass
+        lib.delete_member()
 
     elif choice == 5:
         pass
