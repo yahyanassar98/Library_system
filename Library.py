@@ -56,15 +56,21 @@ class Library:
 
     def delete_member(self):
         id = int(input('* Enter member ID: '))
+        check = input('* Are you sure to delete [yes/no]: ').strip().capitalize()[0]
+       
         for memb in self.members:
             if id == memb.id:
-                self.members.remove(memb)
-                print(f'# Member {memb.name} deleted successfully')
-                ### if user deleted then will return the status of his borrowed books into available
-                for book in self.books:
-                    if book.id in memb.borrowd:
-                        book.status = False
-                break
+                if check == 'Y':
+                    self.members.remove(memb)
+                    print(f'# Member {memb.name} deleted successfully')
+                    ### if user deleted then will return the status of his borrowed books into available
+                    for book in self.books:
+                        if book.id in memb.borrowd:
+                            book.status = False
+                    break
+                else:
+                    print('# Member NOT deleted')
+                    break
         else:
             print('# Member ID NOT Found.')
 
@@ -128,7 +134,7 @@ class Library:
             if member_level == book_level:
                 print(f'# {member_name} has borrowd the book: {book_title}')
                 self.books[index_book].status = True                # access the object through the index of that object in the list
-                # the list of borrowd books for every member
+                # the list of borrowd books for each member
                 # access the outter list that contains objects by the index of that required object
                 # and access the inner list which is the borrowed books through the object and append the id of the book
                 self.members[index_member].borrowd.append(id_book)  
@@ -173,7 +179,7 @@ class Library:
                 yahya   [book1, book2]
                 ali     [book5, book6]
           
-                if I have 2 members and a list of borrowed books for every member
+                if I have 2 members and a list of borrowed books for each member
                 here is a situation >>> if the user enter a value id for (yahya) and a value id for (book5)
                 then the above condition only will give >> that (yahya) return (book5) but he hasn't borrowed it, (ali) did
                 so I have to be sure that the book in the borrowed list of the member
@@ -223,6 +229,7 @@ class Book:
 
 
 lib = Library()
+print(' Welcome to the Library System '.center(100,'-'))
 
 menu = f'''
 {'-' * 50}
@@ -242,7 +249,7 @@ while True:
     try:
         choice = int(input('Enter Your Choice: '))
     except:
-        print('# Value Error, Enter a number value')
+        print('# Value Error: Enter a numerical value')
 
     else:        
 
